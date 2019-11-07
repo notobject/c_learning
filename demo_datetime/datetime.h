@@ -57,7 +57,7 @@ static inline time_t dt_s2seconds(const char *s, const char *fmt)
     return t;
 }
 
-// 字符串转时间戳（微妙）
+// 字符串转时间戳（毫秒）
 static inline suseconds_t dt_s2mseconds(const char *s, const char *fmt)
 {
     struct tm _tm;
@@ -74,7 +74,7 @@ static inline time_t dt_seconds()
     return tv.tv_sec;
 }
 
-// 获取时间戳（微妙）
+// 获取时间戳（毫秒）
 static inline __suseconds_t dt_mseconds()
 {
     struct timeval tv;
