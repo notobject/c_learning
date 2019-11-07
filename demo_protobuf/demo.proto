@@ -1,0 +1,9 @@
+syntax = "proto2";
+package Demo;
+
+message DEMO{
+    required string username=1;
+    required string password=2;
+    required uint64 timestamp=3;
+    optional int32 role=4;
+}

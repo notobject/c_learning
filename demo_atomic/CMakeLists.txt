@@ -1,0 +1,1 @@
+add_executable(demo_atomic demo_atomic.c)

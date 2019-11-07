@@ -1,0 +1,1 @@
+add_executable(demo_dict demo_dict.c dict.c)

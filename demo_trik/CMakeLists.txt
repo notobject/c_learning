@@ -1,0 +1,1 @@
+add_executable(demo_trik demo_trik.c)

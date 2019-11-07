@@ -1,0 +1,1 @@
+add_executable(demo_daemonize demo_daemonize.c)

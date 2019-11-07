@@ -1,0 +1,1 @@
+add_executable(demo_log demo_log.c)

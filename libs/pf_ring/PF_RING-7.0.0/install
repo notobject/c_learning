@@ -1,0 +1,10 @@
+#!/bin/bash
+TOP_DIR=../..
+
+cp userland/lib/libpfring.a ${TOP_DIR}/lib/
+cp kernel/pf_ring.ko ${TOP_DIR}/lib/
+cp drivers/intel/e1000e/e1000e-3.2.7.1-zc/src/e1000e.ko ${TOP_DIR}/lib/
+cp drivers/intel/igb/igb-5.3.3.5-zc/src/igb.ko ${TOP_DIR}/lib/
+cp drivers/intel/ixgbe/ixgbe-5.0.4-zc/src/ixgbe.ko ${TOP_DIR}/lib/
+cp drivers/intel/fm10k/fm10k-0.20.1-zc/src/fm10k.ko ${TOP_DIR}/lib/
+cp drivers/intel/i40e/i40e-2.3.6-zc/src/i40e.ko ${TOP_DIR}/lib/

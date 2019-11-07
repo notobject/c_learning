@@ -1,0 +1,2 @@
+add_executable(demo_zmq_sub demo_sub.c)
+target_link_libraries(demo_zmq_sub zmq)

@@ -1,0 +1,57 @@
+AC_INIT([Makefile.in], 1.0)
+
+SUB_DISTRO=`lsb_release -i|cut -f 2`	
+
+if test "$SUB_DISTRO" = "Debian"; then
+   UBUNTU_RELEASE="debian"
+else
+   UBUNTU_RELEASE=`lsb_release -r|cut -f 2`
+fi
+
+/bin/rm -f debian/control.in
+cp debian/control.$UBUNTU_RELEASE.in debian/control.in
+
+MACHINE=`uname -m`
+REVISION=`git rev-list --all |wc -l`
+GIT_BRANCH=`git branch --no-color|cut -d ' ' -f 2`
+GIT_HASH=`git log --pretty=format:"%H (%ad)"|head -1`
+
+PFRING_VERS=`cat $HOME/PF_RING/kernel/linux/pf_ring.h | grep RING_VERSION | head -1 | cut -d '"' -f 2`
+
+PRE_BUILD_EXAMPLES="pre-build-examples"
+
+PRE_DEP="pre"
+if test $MACHINE = "x86_64"; then
+   EXTN="amd64"
+else
+   if test $MACHINE = "i686"; then 
+     EXTN="i386"
+   else
+     PRE_DEP=""
+     PRE_BUILD_EXAMPLES=""
+   fi
+fi
+
+dnl> The step below is necessary to make sure the package will work on the
+dnl> target system without having to deal with ldconfig
+dnl> if test -d /opt/accolade/lib/;  then sudo cp /opt/accolade/lib/libanic.so /usr/local/lib; fi
+
+DATE=`date -R`
+KERNEL=`uname -r`
+
+AC_SUBST(EXTN)
+AC_SUBST(DATE)
+AC_SUBST(KERNEL)
+AC_SUBST(REVISION)
+AC_SUBST(GIT_BRANCH)
+AC_SUBST(GIT_HASH)
+AC_SUBST(PFRING_VERS)
+AC_SUBST(PRE_DEP)
+AC_SUBST(PRE_BUILD_EXAMPLES)
+
+AC_CONFIG_FILES(Makefile)
+AC_CONFIG_FILES(debian/changelog)
+AC_CONFIG_FILES(debian/files)
+AC_CONFIG_FILES(debian/control)
+
+AC_OUTPUT

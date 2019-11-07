@@ -1,0 +1,1 @@
+add_executable(demo_hash demo_hash.c)

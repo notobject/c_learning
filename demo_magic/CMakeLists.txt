@@ -1,0 +1,2 @@
+add_executable(demo_magic demo_magic.c)
+target_link_libraries(demo_magic magic)

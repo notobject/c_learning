@@ -1,0 +1,1 @@
+add_executable(demo_md demo_md.c md5.c)

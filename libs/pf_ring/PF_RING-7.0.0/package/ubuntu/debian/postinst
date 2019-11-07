@@ -1,0 +1,16 @@
+#!/bin/sh
+
+/sbin/depmod
+
+echo "Adding the pf_ring startup script"
+if [ -f /bin/systemctl ] ; then
+  systemctl enable pf_ring.service > /dev/null
+  systemctl enable cluster.service > /dev/null
+else
+  update-rc.d pf_ring defaults 30 >/dev/null
+  update-rc.d cluster defaults 40 >/dev/null
+fi
+
+/sbin/ldconfig > /dev/null 2>&1
+
+exit 0

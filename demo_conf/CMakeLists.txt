@@ -1,0 +1,2 @@
+add_executable(demo_iniparser demo_iniparser.c)
+target_link_libraries(demo_iniparser iniparser)
