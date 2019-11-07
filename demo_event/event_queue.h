@@ -97,4 +97,58 @@ static inline void dequeue_free(struct dequeue *dq) {
     free(dq);
 }
 
+
+#if 0
+/* 测试代码 */
+int main(int argc, char *argv[]) {
+    struct dequeue *dq = dequeue_create();
+
+    printf("empty()? %s \n", dequeue_empty(dq) == 1 ? "True" : "False");
+    printf("size()? %d \n", dequeue_size(dq));
+
+    struct event *e = (struct event *) malloc(sizeof(struct event *));
+    e->event_id = 1;
+    dequeue_push(dq, e);
+
+    struct event *e2 = (struct event *) malloc(sizeof(struct event *));
+    e2->event_id = 2;
+    dequeue_push(dq, e2);
+
+    struct event *e3 = (struct event *) malloc(sizeof(struct event *));
+    e3->event_id = 3;
+    dequeue_push(dq, e3);
+
+    struct event *e4 = (struct event *) malloc(sizeof(struct event *));
+    e4->event_id = 4;
+    dequeue_push(dq, e4);
+
+    struct event *e5 = (struct event *) malloc(sizeof(struct event *));
+    e5->event_id = 5;
+    dequeue_push(dq, e5);
+
+    printf("empty()? %s \n", dequeue_empty(dq) == 1 ? "True" : "False");
+    printf("size()? %d \n", dequeue_size(dq));
+
+//    struct entry *p = dq->head;
+//    while (p->next != dq->head) {
+//        printf("%d \n", p->next->e->event_id);
+//        p = p->next;
+//    }
+
+
+    int size = dequeue_size(dq), i = 0;
+    for (i = 0; i < size; ++i) {
+        struct event *e_tmp = dequeue_pop(dq);
+        printf("%d \n", e_tmp->event_id);
+    }
+    printf("empty()? %s \n", dequeue_empty(dq) == 1 ? "True" : "False");
+    printf("size()? %d \n", dequeue_size(dq));
+
+    dequeue_free(dq);
+
+    exit(0);
+}
+#endif
+
+
 #endif //SENSOR_EVENT_QUEUE_H

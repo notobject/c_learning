@@ -1,91 +1,8 @@
 #include <stdio.h>
-#include "demos/demo_nids.h"
-#include "demos/demo_base64.h"
-#include "demos/demo_mempool.h"
-#include "demos/demo_pfring.h"
-#include "demos/roundup_power_of_two.h"
+#include <stdbool.h>
 
-#define TURE 1
-#define FLASE 0
-
-struct test_case {
-    char *name;
-    int8_t enable;
-    void (*func)();
-};
-
-struct test_case cases[] = {
-        {"base64", TURE, demo_base64},
-        {"mempool", TURE, demo_mempool},
-        {"nids", TURE, demo_nids},
-        {"pfring", TURE, demo_pfring},
-        /* add more... */
-        {NULL, FLASE, NULL},
-};
-
-int main() {
-    int i = 0;
-
-    while (cases[i].func){
-        if (!cases[i].enable) continue;
-        printf("==========%s begin ============ \n", cases[i].name);
-        cases[i].func();
-        printf("\n");
-        i++;
-    }
-    printf("\n\n==========all done.================ \n");
-    return 0;
-}
-/*
-int main3(int argc, char *argv[]) {
-    struct dequeue *dq = dequeue_create();
-
-    printf("empty()? %s \n", dequeue_empty(dq) == 1 ? "True" : "False");
-    printf("size()? %d \n", dequeue_size(dq));
-
-    struct event *e = (struct event *) malloc(sizeof(struct event *));
-    e->event_id = 1;
-    dequeue_push(dq, e);
-
-    struct event *e2 = (struct event *) malloc(sizeof(struct event *));
-    e2->event_id = 2;
-    dequeue_push(dq, e2);
-
-    struct event *e3 = (struct event *) malloc(sizeof(struct event *));
-    e3->event_id = 3;
-    dequeue_push(dq, e3);
-
-    struct event *e4 = (struct event *) malloc(sizeof(struct event *));
-    e4->event_id = 4;
-    dequeue_push(dq, e4);
-
-    struct event *e5 = (struct event *) malloc(sizeof(struct event *));
-    e5->event_id = 5;
-    dequeue_push(dq, e5);
-
-    printf("empty()? %s \n", dequeue_empty(dq) == 1 ? "True" : "False");
-    printf("size()? %d \n", dequeue_size(dq));
-
-//    struct entry *p = dq->head;
-//    while (p->next != dq->head) {
-//        printf("%d \n", p->next->e->event_id);
-//        p = p->next;
-//    }
-
-
-    int size = dequeue_size(dq), i = 0;
-    for (i = 0; i < size; ++i) {
-        struct event *e_tmp = dequeue_pop(dq);
-        printf("%d \n", e_tmp->event_id);
-    }
-    printf("empty()? %s \n", dequeue_empty(dq) == 1 ? "True" : "False");
-    printf("size()? %d \n", dequeue_size(dq));
-
-    dequeue_free(dq);
-
-    exit(0);
-}
-int main2(int argc, char *argv[]) {
+void demo_bool()
+{
     // C语言中的布尔类型, 任何非0值都会被转为1
     _Bool is_ok = 100;
 
@@ -93,14 +10,20 @@ int main2(int argc, char *argv[]) {
     bool cpp_like_bool = true;
     printf("_Bool = %d \n", is_ok);
     printf("cpp_like_bool= %d \n", cpp_like_bool);
+}
 
+void demo_rand()
+{
     // 随机数,stdlib.h
     srand((unsigned int) time(NULL));
     int n = 5;
     while (n-- > 0) {
         printf("%d \n", rand() % 100);
     }
+}
 
+void demo_malloc()
+{
     // malloc
     void *p = malloc(1); // 分配1 byte大小的内存空间，将内存地址赋值给c
     // 由于malloc返回的是通用指针类型 void，这里需要转换成实际的指针类型
@@ -117,8 +40,35 @@ int main2(int argc, char *argv[]) {
     *((char *) ptr + 1) = 'b'; // 加1表示 偏移一个单位大小的字节(该单位取决于被转换的指针类型 所执向的数据结构大小，int=4, char=1...)
     printf("ptr的地址：%p , ptr的值:%d , %d \n", ptr, *((char *) ptr), *((char *) ptr + 1));
     free(ptr);
+}
 
-    printf("Hello World");
+
+struct command {
+    char *name;
+    int enable;
+
+    void (*func)();
+};
+
+struct command cmds[] = {
+        {"demo_bool",   1, demo_bool},
+        {"demo_rand",   1, demo_rand},
+        {"demo_malloc", 1, demo_malloc},
+        /* 命令模式 add more... */
+        {NULL,          0, NULL},
+};
+
+int main()
+{
+    int i = 0;
+
+    while (cmds[i].func) {
+        if (!cmds[i].enable) continue;
+        printf("==========%s()============ \n", cmds[i].name);
+        cmds[i].func();
+        printf("\n");
+        i++;
+    }
+    printf("\n\n==========all done.================ \n");
     return 0;
 }
- */
