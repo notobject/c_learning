@@ -29,14 +29,14 @@ struct dequeue {
 };
 
 static inline struct entry *dequeue_create_entry(struct event *e) {
-    struct entry *entry = (struct entry *) malloc(sizeof(struct entry *));
+    struct entry *entry = (struct entry *) malloc(sizeof(struct entry));
     entry->prev = entry->next = NULL;
     entry->e = e;
     return entry;
 }
 
 static inline struct dequeue *dequeue_create() {
-    struct dequeue *dq = (struct dequeue *) malloc(sizeof(struct dequeue *));
+    struct dequeue *dq = (struct dequeue *) malloc(sizeof(struct dequeue));
     dq->head = dequeue_create_entry(NULL);
     dq->head->prev = dq->head;
     dq->head->next = NULL;
