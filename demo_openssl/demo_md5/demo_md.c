@@ -11,7 +11,6 @@
 #include <stdio.h>
 #include <string.h>
 #include "md5.h"
-#include "sha1.h"
 #define MD5_STR_LEN_32 32
 #define MD5_STR_LEN_16 16
 #define SHA1_STR_LEN 32
