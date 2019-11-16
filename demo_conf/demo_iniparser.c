@@ -1,7 +1,7 @@
 //
 // Created by longduping on 2019/10/30.
 //
-#include <iniparser.h>
+#include <iniparser/iniparser.h>
 
 int main(int argc, char *argv[])
 {
@@ -14,7 +14,7 @@ int main(int argc, char *argv[])
         char *sec = iniparser_getsecname(dict, i);
         printf("[%s]\n", sec);
         int nkeys = iniparser_getsecnkeys(dict, sec);
-        char **keys = iniparser_getseckeys(dict, sec);
+        char **keys = iniparser_getseckeys(dict, sec, NULL);
         while (nkeys-- > 0){
             char *value = iniparser_getstring(dict, keys[nkeys], "NULL");
             printf("\tkey=%s, value=%s\n", keys[nkeys], value);

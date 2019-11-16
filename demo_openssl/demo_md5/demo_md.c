@@ -10,6 +10,7 @@
  */
 #include <stdio.h>
 #include <string.h>
+#include <openssl/sha.h>
 #include "md5.h"
 #define MD5_STR_LEN_32 32
 #define MD5_STR_LEN_16 16
@@ -30,7 +31,7 @@ int main(int argc, char *argv[])
 
     // SHA-1
     char sha1[SHA1_STR_LEN];
-    StrSHA1(data, strlen(data), sha1);
+    SHA1(data, strlen(data), sha1);
     printf("%s's sha1 is %s\n", data, sha1);
     // SHA-256
     return 0;

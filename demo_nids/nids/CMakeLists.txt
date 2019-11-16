@@ -14,6 +14,6 @@ aux_source_directory(libnids-1.24/src DIR_SRCS)
 add_definitions("-D__BSD_SOURCE -D__FAVOR_BSD -DHAVE_NET_ETHERNET_H")
 
 add_library(nids ${DIR_SRCS})
-# nids 依赖 pcap,net,glib.  glib 依赖 gthread-2.0
-target_link_libraries(nids pcap net gthread-2.0 ${Glib_LIBRARY})
-
+# nids 依赖 libpcap,libnet,libglib2.0.  glib-2.0 依赖 gthread-2.0
+message("Glib_LIBRARY=${Glib_LIBRARY}")
+target_link_libraries(nids pcap net gthread-2.0 glib-2.0)

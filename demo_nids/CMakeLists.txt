@@ -1,5 +1,6 @@
 include_directories(
     nids/libnids-1.24/src/
+    glib-2.0/
 )
 
 add_subdirectory(nids)

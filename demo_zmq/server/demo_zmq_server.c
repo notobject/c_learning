@@ -3,7 +3,6 @@
 //
 #include <zmq.h>
 #include <stdio.h>
-#include <zconf.h>
 #include <string.h>
 #include "zmq-util.h"
 
