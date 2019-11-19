@@ -18,6 +18,6 @@ include_directories(
 
 add_executable(demo_pfring demo_pfring.c)
 
-target_link_libraries(demo_pfring ${PF_RING_LIBRARY} dl)
+target_link_libraries(demo_pfring ${PF_RING_LIBRARY} dl pthread)
 
 add_subdirectory(pf_ring)
