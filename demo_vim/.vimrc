@@ -7,7 +7,8 @@ call vundle#begin()
 " add plugins here
 Plugin 'scrooloose/nerdtree'
 Plugin 'jiangmiao/auto-pairs'
-
+Plugin 'ervandew/supertab'
+Plugin 'WolfgangMehner/c-support'
 call vundle#end()
 
 " 基本配置
@@ -45,9 +46,13 @@ let Tlist_Sort_Type="name"    " 按tag的名字排序
 
 " NERDTree
 map <F3> :NERDTreeToggle<CR>  " F3打开
-" 当执行vim时没有携带文件，自动打开NERDTree
+" 执行vim时若没有携带文件，自动打开NERDTree
 autocmd StdinReadPre * let s:std_in=1
 autocmd VimEnter * if argc() == 0 && !exists("s:std_in") | NERDTree | endif
+
+" supertab
+let g:SuperTabRetainCompletionType=2 "记住上次的补全方式,直到按Esc退出插入模式位置
+let g:SuperTabDefaultCompletionType="<c-x><c-o>"  "按下tab后默认补全方式为<c-p>,现在改为<c-x><c-o>
 
 " 状态条配置
 set laststatus=2
