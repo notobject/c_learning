@@ -32,7 +32,7 @@ static inline unsigned int roundup_power_of_two(unsigned int size)
 
 int main()
 {
-    unsigned int size = roundup_power_of_two(14);
+    unsigned int size = roundup_power_of_two(4096 * 3);
     printf("size = %d\n", size);
     unsigned int mask = size - 1;
     printf("mask = %d\n", size - 1);

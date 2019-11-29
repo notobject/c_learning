@@ -1,7 +1,7 @@
 cmake_minimum_required(VERSION 2.8.4)
 project(c_learning C CXX)
 set(CMAKE_C_STANDARD 99)
-
+set(CMAKE_PREFIX_PATH ${PROJECT_SOURCE_DIR}/demo_cmake)
 
 # include headers
 include_directories(
@@ -37,3 +37,5 @@ add_subdirectory(demo_base64)
 add_subdirectory(demo_nids)
 # add_subdirectory(demo_pfring)
 add_subdirectory(demo_mempool)
+add_subdirectory(demo_leetcode)
+add_subdirectory(demo_pcap)
