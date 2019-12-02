@@ -2,3 +2,6 @@
 /cmake-build-debug/
 /build/**
 .idea
+.vscode
+demo_libevent/demo_libevent
+demo_libevent/samples/event_mem_management
