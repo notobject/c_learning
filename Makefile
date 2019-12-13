@@ -1,7 +1,7 @@
 CC = gcc
 CFLAGS = -Wall -g 
 
-SUBDIRS = demo_atomic
+SUBDIRS = demo_atomic demo_ipaddr
 
 TARGET = c_learning
 
@@ -18,7 +18,7 @@ sub-modules:
 
 
 $(TARGET): main.c
-	$(CC) $(CFLAGS) -o $(TARGET) main.c
+	$(CC) $(CFLAGS) -fstack-protector-all -g -o $(TARGET) main.c
 
 clean:
 	-@rm -f $(TARGET) *.o

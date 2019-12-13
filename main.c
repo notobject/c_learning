@@ -2,6 +2,7 @@
 #include <stdbool.h>
 #include <stdlib.h>
 #include <setjmp.h>
+#include <string.h>
 
 /*                C程序 内存区域
  * +----------------------------------------+
@@ -36,9 +37,10 @@ void demo_bool()
 void demo_rand()
 {
     // 随机数,stdlib.h
-    srand((unsigned int) time(NULL));
+    srand((unsigned int)time(NULL));
     int n = 5;
-    while (n-- > 0) {
+    while (n-- > 0)
+    {
         printf("%d \n", rand() % 100);
     }
 }
@@ -48,19 +50,18 @@ void demo_malloc()
     /* malloc */
     void *p = malloc(1); // 分配1 byte大小的内存空间，将内存地址赋值给c
     // 由于malloc返回的是通用指针类型 void，这里需要转换成实际的指针类型
-    *((char *) p) = 'A';
-    printf("c的地址：%p , c的值:%c \n", p, *((char *) p));
-    // 释放p所执行的内存
-    free(p);
-    *((char *) p) = 'B'; // 释放内存后仍然可以对该内存区域操作，但是不安全，随时会被覆盖
-    printf("c的地址：%p , c的值:%c \n", p, *((char *) p));
+    *((char *)p) = 'A';
+    printf("c的地址：%p , c的值:%c \n", p, *((char *)p));
+    free(p);    // 释放p所执行的内存
+    *((char *)p) = 'B'; // 释放内存后切勿对该内存区域再进行操作，不安全，可能会引起段错误
+    //printf("c的地址：%p , c的值:%c \n", p, *((char *)p));
 
     /* calloc  */
     // 与malloc的区别: calloc分配完成后会将内存块中所有的位 置为：0
-    void *ptr = calloc(2, 1);// 申请分配2个单元，其中每个单元4字节的内存空间（共2 * 4 = 8 字节）。
-    *((char *) ptr) = 'a';
-    *((char *) ptr + 1) = 'b'; // 加1表示 偏移一个单位大小的字节(该单位大小取决于被转换的指针 所执向的数据结构大小，int=4, char=1...)
-    printf("ptr的地址：%p , ptr的值:%d , %d \n", ptr, *((char *) ptr), *((char *) ptr + 1));
+    void *ptr = calloc(2, 1); // 申请分配2个单元，其中每个单元4字节的内存空间（共2 * 4 = 8 字节）。
+    *((char *)ptr) = 'a';
+    *((char *)ptr + 1) = 'b'; // 加1表示 偏移一个单位大小的字节(该单位大小取决于被转换的指针 所执向的数据结构大小，int=4, char=1...)
+    printf("ptr的地址：%p , ptr的值:%d , %d \n", ptr, *((char *)ptr), *((char *)ptr + 1));
     free(ptr);
 
     /* realloc 
@@ -118,9 +119,32 @@ void demo_limit()
      * setrlimit()       */
 }
 
+void demo_popen()
+{
+    /**
+     *  匿名管道，执行Shell命令
+     */
+    char *command = "ls -a -l";
+
+    FILE *fp = NULL;
+    fp = popen(command, "r");
+    if (NULL == fp)
+    {
+        printf("exec %s failed.", command);
+        return;
+    }
+    char buf[10240];
+    while (fgets(buf, sizeof(buf), fp) != NULL)
+    {
+        printf("%s", buf);
+    }
+    pclose(fp);
+}
+
 /*---------------------------------------------------------------------------*/
 
-struct command {
+struct command
+{
     char *name;
     int enable;
 
@@ -128,38 +152,40 @@ struct command {
 };
 
 struct command cmds[] = {
-        {"demo_bool",   1, demo_bool},
-        {"demo_rand",   1, demo_rand},
-        {"demo_malloc", 1, demo_malloc},
-        {"demo_sysenv", 1, demo_sysenv},
-        {"demo_jmp",    1, demo_jmp},
-        {"demo_limit",  1, demo_limit},
-        /* 命令模式 add more... */
-        {NULL,          0, NULL},
+    {"demo_bool", 1, demo_bool},
+    {"demo_rand", 1, demo_rand},
+    {"demo_malloc", 1, demo_malloc},
+    {"demo_sysenv", 1, demo_sysenv},
+    {"demo_jmp", 1, demo_jmp},
+    {"demo_limit", 1, demo_limit},
+    {"demo_popen", 1, demo_popen},
+    /* 命令模式 add more... */
+    {NULL, 0, NULL},
 };
-
 
 int main()
 {
     int i = 0;
     /* 记录该栈帧的一些信息（包括此处的返回地址），若返回值为0，则为首次调用。若非0，则是从别处跳过来的。 */
     int jmpno = setjmp(jmp_buffer);
-    switch (jmpno) {
-        case 0:
-            // 首次调用，记录此时的栈信息，并保存在全局变量jmp_buffer中。
-            break;
-        case -1:
-            printf("demo_jmp() error!");
-            return 1;
-        default:
-            printf("other error! %d\n", jmpno);
-            break;
+    switch (jmpno)
+    {
+    case 0:
+        // 首次调用，记录此时的栈信息，并保存在全局变量jmp_buffer中。
+        break;
+    case -1:
+        printf("demo_jmp() error!");
+        return 1;
+    default:
+        printf("other error! %d\n", jmpno);
+        break;
     }
-    while (cmds[i].func) {
-        if (!cmds[i].enable) continue;
-        printf("==========%s()============ \n", cmds[i].name);
+    while (cmds[i].func)
+    {
+        if (!cmds[i].enable)
+            continue;
+        printf("==========start %s()============ \n", cmds[i].name);
         cmds[i].func();
-        printf("\n");
         i++;
     }
     printf("\n\n==========all done.================ \n");

@@ -5,3 +5,6 @@
 .vscode
 demo_libevent/demo_libevent
 demo_libevent/samples/event_mem_management
+c_learning
+demo_atomic/demo_atomic
+*.o
